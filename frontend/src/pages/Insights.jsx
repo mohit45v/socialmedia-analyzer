@@ -15,8 +15,9 @@ const Insights = () => {
 
 
   // API Configuration
-  const BASE_URL = 'https://api.langflow.astra.datastax.com/lf/9bb3a128-8c2e-4416-866b-6ad45c278a17/api/v1/run/SocialPulse-Agent';
-  const AUTH_TOKEN = 'AstraCS:bEuqkQerLOqWISUwFxZFZHLc:079e6afd6dd63c20e34bda7145ab4f86e6e619089f5aceba7eba91b4854ad472';
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const AUTH_TOKEN = import.meta.env.VITE_AUTH_TOKEN;
+
 
   // Request payload
   const payload = {
