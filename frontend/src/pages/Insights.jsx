@@ -29,6 +29,38 @@ const Insights = () => {
       "AstraDBToolComponent-IHNnw": {}
     }
   };
+  const processMultilineJsonString = (inputString) => {
+    try {
+      // Remove the triple backticks and the json keyword
+      const cleanedString = inputString
+        .replace(/^```json\s*/g, '') // Remove the starting json and any spaces
+        .replace(/```$/g, '')     // Remove the ending ```
+        .trim();                    // Remove any extra whitespace
+
+      // Now we should have a valid JSON string that can be parsed
+      const parsedData = JSON.parse(cleanedString);
+
+      // Output the parsed data
+      console.log('Parsed JSON Object:', parsedData);
+
+      // Accessing some properties as an example
+      console.log('\n--- Insights ---');
+      parsedData.insights.forEach((insight) => {
+        console.log(`Metric: ${insight.metric}, Reels: ${insight.reels}, Carousel: ${insight.carousel}`);
+      });
+
+      console.log('\n--- Strengths of Reels ---');
+      console.log(parsedData.strengths_reels);
+
+      console.log('\n--- Actionable Insights ---');
+      console.log(parsedData.actionable_insights);
+      return parsedData;
+    } catch (error) {
+      console.error('Error parsing JSON:', error.message);
+
+    }
+
+  };
 
   const handleSubmit = async () => {
     try {
@@ -41,18 +73,19 @@ const Insights = () => {
         },
         data: payload,
       });
-  
+
       // Remove the non-JSON prefix ("json ")
-      const jsonString = response.data?.outputs[0]?.outputs[0]?.results?.message?.data?.text?.replace(/^json\s*/, '').trim();
-      const parsedData = JSON.parse(jsonString);
-      console.log(`parse data : ${parsedData}`);
-      setResponse(response.data);
+      // const jsonString = response.data?.outputs[0]?.outputs[0]?.results?.message?.data?.text?.replace(/^json\s*/, '').trim();
+      // const parsedData = JSON.parse(jsonString);
+      // const parseData = processMultilineJsonString(response?.outputs[0]?.outputs[0]?.results?.message?.data?.text);
+      // console.log(`parse data : ${parseData}`);
+      setResponse(response.data?.outputs[0]?.outputs[0]?.results?.message?.data?.text);
       // setResponse(JSON.parse(response?.outputs[0]?.outputs[0]?.results?.message?.data?.text?.match(/```json([\s\S]*)```/)[1])?.reels_count);
       console.log(`Count: ${JSON.parse(response?.outputs[0]?.outputs[0]?.results?.message?.data?.text?.match(/```json([\s\S]*)```/)[1])?.reels_count}`);
       // console.log(`Response: ${JSON.stringify(response.data, null, 2)}`);
       // console.log('Parse Response:', JSON.parse(response.data));
       // console.log(`Stringify Response: ${JSON.stringify(response.data)}`)
-      
+
     } catch (error) {
       console.error('Error:', error.response?.data || error.message);
       throw error;
@@ -84,16 +117,16 @@ const Insights = () => {
 
               <div className="flex justify-end">
                 <animated.div style={bubbleAnimation} className="bg-gray-200 text-gray-800 p-4 rounded-lg max-w-xs">
-                  <p>
-                  Session ID: {response?.outputs[0]?.outputs[0]?.results?.message?.data?.text || 'N/A'}
-                  {}
+                  <p >
+                    {/* {response?.outputs[0]?.outputs[0]?.results?.message?.data?.text || 'N/A'} */}
+                    {response}
                   </p>
                 </animated.div>
               </div>
             </div>
           </div>
 
-          
+
 
           {/* User Input Box */}
           <div className="flex items-center gap-4">
