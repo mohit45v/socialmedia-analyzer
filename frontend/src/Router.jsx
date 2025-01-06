@@ -6,6 +6,7 @@ import Analytics from "./pages/Analytics";
 
 import Insights from "./pages/Insights";
 import Preloader from "./components/Preloader";
+import About from "./pages/About";
 
 const AppRouter = () => {
   return (
@@ -21,6 +22,7 @@ const AppRouter = () => {
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/insights" element={<Insights />} />
             <Route path="*" element={<Preloader />} />
+            <Route path="/about" element={<About/>}/>
           </Routes>
         </div>
       </div>
